@@ -1,0 +1,5 @@
+name: RecipeBugFix
+version: '1.0-SNAPSHOT'
+main: org.allivilsey.recipeBugFix.RecipeBugFix
+api-version: '1.21'
+authors: [ Allivilsey ]
