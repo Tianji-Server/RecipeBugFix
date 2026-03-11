@@ -1,4 +1,4 @@
-package org.allivilsey.recipeBugFix;
+package org.tianjiserver.tianjicore;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Keyed;
@@ -8,18 +8,16 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.Recipe;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public final class RecipeBugFix extends JavaPlugin implements Listener {
+public class RecipeBugFix implements Listener {
 
     List<NamespacedKey> allRecipeKeys;
 
-    @Override
-    public void onEnable() {
+    public RecipeBugFix() {
         allRecipeKeys = new ArrayList<>();
         Iterator<Recipe> iterator = Bukkit.recipeIterator();
         while (iterator.hasNext()) {
@@ -29,14 +27,8 @@ public final class RecipeBugFix extends JavaPlugin implements Listener {
                 allRecipeKeys.add(key);
             }
         }
-        getLogger().info("Recipe collected");
-
-        Bukkit.getPluginManager().registerEvents(this,this);
-    }
-
-    @Override
-    public void onDisable() {
-
+        TianjiCore.getInstance().getLogger().info("Recipe collected");
+        TianjiCore.getInstance().getLogger().info("RecipeBugFix feature is loaded");
     }
 
     @EventHandler(ignoreCancelled = true)

@@ -1,5 +1,5 @@
-name: RecipeBugFix
-version: '1.0-SNAPSHOT'
-main: org.allivilsey.recipeBugFix.RecipeBugFix
+name: TianjiCore
+version: ${project.version}
+main: org.tianjiserver.tianjicore.TianjiCore
 api-version: '1.21'
-authors: [ Allivilsey ]
+authors: [ Tianji-Community ]
