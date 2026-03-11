@@ -13,7 +13,7 @@ public class TianjiCore extends JavaPlugin {
     saveDefaultConfig();
 
     getServer().getPluginManager().registerEvents(new RecipeBugFix(), this);
-    getServer().getPluginManager().registerEvents(new NoPhantom(), this);
+    getServer().getPluginManager().registerEvents(new MobControlListener(), this);
 
     getLogger().info("TianjiCore is enabled！");
   }
