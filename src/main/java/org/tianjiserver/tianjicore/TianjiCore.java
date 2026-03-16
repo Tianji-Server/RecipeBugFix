@@ -1,28 +1,43 @@
 package org.tianjiserver.tianjicore;
 
+import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.tianjiserver.tianjicore.fixer.EndermanMushroomBugFix;
-import org.tianjiserver.tianjicore.feature.PhantomSpawnBlocker;
-import org.tianjiserver.tianjicore.fixer.RecipeBugFix;
 
 public class TianjiCore extends JavaPlugin {
 
-  private static TianjiCore instance;
+    private static TianjiCore instance;
+    private TianjiCoreCommandUtil commandUtil;
 
-  @Override
-  public void onEnable() {
-    instance = this;
+    @Override
+    public void onEnable() {
+        instance = this;
 
-    saveDefaultConfig();
+        saveDefaultConfig();
 
-    getServer().getPluginManager().registerEvents(new RecipeBugFix(), this);
-    getServer().getPluginManager().registerEvents(new PhantomSpawnBlocker(), this);
-    getServer().getPluginManager().registerEvents(new EndermanMushroomBugFix(), this);
+        commandUtil = new TianjiCoreCommandUtil(this);
+        commandUtil.bootstrap();
 
-    getLogger().info("TianjiCore is enabled！");
-  }
+        TianjiCoreCommands commandExecutor = new TianjiCoreCommands(commandUtil);
+        PluginCommand tianjiCommand = getCommand("tianji");
+        if (tianjiCommand == null) {
+            getLogger().severe("未找到 tianji 命令，请检查 plugin.yml 配置");
+            getServer().getPluginManager().disablePlugin(this);
+            return;
+        }
+        tianjiCommand.setExecutor(commandExecutor);
+        tianjiCommand.setTabCompleter(commandExecutor);
 
-  public static TianjiCore getInstance() {
-    return instance;
-  }
+        getLogger().info("TianjiCore is enabled！");
+    }
+
+    @Override
+    public void onDisable() {
+        if (commandUtil != null) {
+            commandUtil.shutdown();
+        }
+    }
+
+    public static TianjiCore getInstance() {
+        return instance;
+    }
 }
