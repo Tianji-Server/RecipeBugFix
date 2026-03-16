@@ -1,4 +1,4 @@
-package org.tianjiserver.tianjicore.fixer;
+package tianjicore.fixer;
 
 import org.bukkit.Material;
 import org.bukkit.entity.Enderman;

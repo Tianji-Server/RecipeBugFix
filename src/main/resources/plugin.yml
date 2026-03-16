@@ -1,6 +1,6 @@
 name: TianjiCore
 version: ${project.version}
-main: org.tianjiserver.tianjicore.TianjiCore
+main: tianjicore.TianjiCore
 api-version: '1.21'
 authors: [ Tianji-Community ]
 commands:

@@ -1,4 +1,4 @@
-package org.tianjiserver.tianjicore;
+package tianjicore;
 
 import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -27,7 +27,7 @@ public class TianjiCore extends JavaPlugin {
         tianjiCommand.setExecutor(commandExecutor);
         tianjiCommand.setTabCompleter(commandExecutor);
 
-        getLogger().info("TianjiCore is enabled！");
+        getLogger().info("TianjiCore 已启动");
     }
 
     @Override

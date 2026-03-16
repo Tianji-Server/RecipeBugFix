@@ -1,4 +1,4 @@
-package org.tianjiserver.tianjicore.fixer;
+package tianjicore.fixer;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Keyed;
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.tianjiserver.tianjicore.TianjiCore;
+import tianjicore.TianjiCore;
 
 // 修复某些情况下玩家jei模组显示需要管理员给予配方的bug
 public class RecipeBugFix implements Listener {

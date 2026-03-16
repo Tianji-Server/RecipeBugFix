@@ -1,4 +1,4 @@
-package org.tianjiserver.tianjicore;
+package tianjicore;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
