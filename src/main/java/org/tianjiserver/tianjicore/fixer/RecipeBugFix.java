@@ -1,4 +1,4 @@
-package org.tianjiserver.tianjicore.feature;
+package org.tianjiserver.tianjicore.fixer;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Keyed;

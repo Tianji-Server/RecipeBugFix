@@ -1,9 +1,9 @@
 package org.tianjiserver.tianjicore;
 
 import org.bukkit.plugin.java.JavaPlugin;
-import org.tianjiserver.tianjicore.feature.EndermanMushroomBugFix;
+import org.tianjiserver.tianjicore.fixer.EndermanMushroomBugFix;
 import org.tianjiserver.tianjicore.feature.PhantomSpawnBlocker;
-import org.tianjiserver.tianjicore.feature.RecipeBugFix;
+import org.tianjiserver.tianjicore.fixer.RecipeBugFix;
 
 public class TianjiCore extends JavaPlugin {
 
