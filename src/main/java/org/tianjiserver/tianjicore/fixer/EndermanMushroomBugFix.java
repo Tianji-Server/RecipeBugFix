@@ -12,12 +12,11 @@ public class EndermanMushroomBugFix implements Listener {
 
   @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
   public void onEndermanPutMushroom(EntityChangeBlockEvent event) {
-    if (!(event.getEntity() instanceof Enderman)) {
+    if (!(event.getEntity() instanceof Enderman enderman)) {
       return;
     }
     if (isMushroom(event.getTo()) || isMushroom(event.getBlockData().getMaterial())) {
       event.setCancelled(true);
-      Enderman enderman = (Enderman) event.getEntity();
       enderman.setCarriedBlock(null);
     }
   }
