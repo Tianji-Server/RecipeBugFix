@@ -1,6 +1,9 @@
 package org.tianjiserver.tianjicore;
 
 import org.bukkit.plugin.java.JavaPlugin;
+import org.tianjiserver.tianjicore.feature.EndermanMushroomBugFix;
+import org.tianjiserver.tianjicore.feature.PhantomSpawnBlocker;
+import org.tianjiserver.tianjicore.feature.RecipeBugFix;
 
 public class TianjiCore extends JavaPlugin {
 
@@ -13,7 +16,8 @@ public class TianjiCore extends JavaPlugin {
     saveDefaultConfig();
 
     getServer().getPluginManager().registerEvents(new RecipeBugFix(), this);
-    getServer().getPluginManager().registerEvents(new MobControlListener(), this);
+    getServer().getPluginManager().registerEvents(new PhantomSpawnBlocker(), this);
+    getServer().getPluginManager().registerEvents(new EndermanMushroomBugFix(), this);
 
     getLogger().info("TianjiCore is enabled！");
   }
