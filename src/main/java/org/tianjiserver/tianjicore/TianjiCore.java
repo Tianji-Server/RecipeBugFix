@@ -1,4 +1,4 @@
-package tianjicore;
+package org.tianjiserver.tianjicore;
 
 import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.java.JavaPlugin;

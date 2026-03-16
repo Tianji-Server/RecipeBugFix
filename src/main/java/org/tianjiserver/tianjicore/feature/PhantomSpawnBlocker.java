@@ -1,4 +1,4 @@
-package tianjicore.feature;
+package org.tianjiserver.tianjicore.feature;
 
 import org.bukkit.entity.EntityType;
 import org.bukkit.event.EventHandler;

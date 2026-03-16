@@ -1,4 +1,4 @@
-package tianjicore;
+package org.tianjiserver.tianjicore;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

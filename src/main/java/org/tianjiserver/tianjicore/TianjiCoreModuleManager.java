@@ -1,10 +1,10 @@
-package tianjicore;
+package org.tianjiserver.tianjicore;
 
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
-import tianjicore.feature.PhantomSpawnBlocker;
-import tianjicore.fixer.EndermanMushroomBugFix;
-import tianjicore.fixer.RecipeBugFix;
+import org.tianjiserver.tianjicore.feature.PhantomSpawnBlocker;
+import org.tianjiserver.tianjicore.fixer.EndermanMushroomBugFix;
+import org.tianjiserver.tianjicore.fixer.RecipeBugFix;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;

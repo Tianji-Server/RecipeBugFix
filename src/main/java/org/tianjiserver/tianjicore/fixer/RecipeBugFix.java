@@ -1,4 +1,4 @@
-package tianjicore.fixer;
+package org.tianjiserver.tianjicore.fixer;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Keyed;
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import tianjicore.TianjiCore;
+import org.tianjiserver.tianjicore.TianjiCore;
 
 /**
  * 配方同步修复模块。
