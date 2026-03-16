@@ -49,7 +49,7 @@ class TianjiCoreModuleManager {
         );
         registerModule(
                 "phantomspawnblocker",
-                "幻翼阻止",
+                "阻止幻翼生成",
                 true,
                 PhantomSpawnBlocker::new,
                 "phantom",
@@ -57,7 +57,7 @@ class TianjiCoreModuleManager {
         );
         registerModule(
                 "endermanmushroombugfix",
-                "末影人蘑菇修复",
+                "末地蘑菇修复",
                 false,
                 EndermanMushroomBugFix::new,
                 "enderman",
