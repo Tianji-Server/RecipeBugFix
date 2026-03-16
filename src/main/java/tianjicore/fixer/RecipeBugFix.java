@@ -15,9 +15,13 @@ import java.util.List;
 
 import tianjicore.TianjiCore;
 
-// 修复某些情况下玩家jei模组显示需要管理员给予配方的bug
+/**
+ * 配方同步修复模块。
+ * 玩家加入时主动下发已收集的配方，规避部分客户端显示异常。
+ */
 public class RecipeBugFix implements Listener {
 
+    // 启动阶段收集全量配方 key，避免每次玩家加入时重复遍历。
     List<NamespacedKey> allRecipeKeys;
 
     public RecipeBugFix() {
@@ -38,6 +42,7 @@ public class RecipeBugFix implements Listener {
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
         try {
+            // 统一为玩家解锁已收集配方，修复客户端“需管理员授予配方”的错误提示。
             player.discoverRecipes(allRecipeKeys);
             Bukkit.getLogger().info("[RecipeBugFix] Player " + player.getName() + " received recipe");
         } catch (Exception e) {

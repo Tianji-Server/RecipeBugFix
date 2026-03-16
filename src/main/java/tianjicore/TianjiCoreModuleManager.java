@@ -15,6 +15,10 @@ import java.util.Set;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
+/**
+ * 模块管理器。
+ * 统一管理模块注册、启停、重载与配置持久化。
+ */
 class TianjiCoreModuleManager {
 
     private static final String RELOAD_PLUGIN_TARGET = "plugin";
@@ -34,6 +38,7 @@ class TianjiCoreModuleManager {
     }
 
     void bootstrap() {
+        // 在这里集中声明模块，命令层无需感知具体模块实现。
         registerModule(
                 "recipebugfix",
                 "配方修复",
@@ -63,6 +68,7 @@ class TianjiCoreModuleManager {
         modules.keySet().forEach(moduleKey ->
                 plugin.getConfig().addDefault(moduleConfigPath(moduleKey), true)
         );
+        // 保存默认值后，按配置应用模块状态。
         plugin.saveConfig();
 
         applyConfigStates(false);
@@ -82,9 +88,12 @@ class TianjiCoreModuleManager {
         }
 
         boolean targetState = !module.enabled;
-        boolean success = targetState ? startModule(module) : stopModule(module);
-        if (!success) {
+        // toggle 的目标状态为“当前状态取反”。
+        if (targetState && !startModule(module)) {
             return new ToggleResult(ToggleStatus.FAILED, module.toInfo());
+        }
+        if (!targetState) {
+            stopModule(module);
         }
 
         plugin.getConfig().set(moduleConfigPath(module.key), targetState);
@@ -95,6 +104,7 @@ class TianjiCoreModuleManager {
     ReloadResult reload(String rawTargetInput) {
         String target = normalize(rawTargetInput);
         if (RELOAD_PLUGIN_ALIASES.contains(target)) {
+            // 插件级重载：重读配置并按新配置刷新全部模块。
             plugin.reloadConfig();
             applyConfigStates(true);
             return new ReloadResult(ReloadStatus.SUCCESS_PLUGIN, null);
@@ -107,9 +117,11 @@ class TianjiCoreModuleManager {
 
         plugin.reloadConfig();
         boolean shouldEnable = plugin.getConfig().getBoolean(moduleConfigPath(module.key), true);
-        boolean success = shouldEnable ? restartModule(module) : stopModule(module);
-        if (!success) {
+        if (shouldEnable && !restartModule(module)) {
             return new ReloadResult(ReloadStatus.FAILED, module.toInfo());
+        }
+        if (!shouldEnable) {
+            stopModule(module);
         }
 
         return new ReloadResult(ReloadStatus.SUCCESS_MODULE, module.toInfo());
@@ -145,6 +157,7 @@ class TianjiCoreModuleManager {
     }
 
     private void applyConfigStates(boolean forceRestartEnabledModule) {
+        // 根据配置统一校准模块状态，避免内存状态与配置不一致。
         modules.values().forEach(module -> {
             boolean shouldEnable = plugin.getConfig().getBoolean(moduleConfigPath(module.key), true);
             if (shouldEnable) {
@@ -160,9 +173,7 @@ class TianjiCoreModuleManager {
     }
 
     private boolean restartModule(ModuleState module) {
-        if (!stopModule(module)) {
-            return false;
-        }
+        stopModule(module);
         return startModule(module);
     }
 
@@ -172,6 +183,7 @@ class TianjiCoreModuleManager {
         }
 
         try {
+            // 每次启用都创建新监听器实例，避免复用旧实例引入脏状态。
             Listener listener = module.listenerFactory.get();
             plugin.getServer().getPluginManager().registerEvents(listener, plugin);
             module.listenerInstance = listener;
@@ -186,18 +198,18 @@ class TianjiCoreModuleManager {
         }
     }
 
-    private boolean stopModule(ModuleState module) {
+    private void stopModule(ModuleState module) {
         if (!module.enabled) {
-            return true;
+            return;
         }
 
         stopModuleIfRunning(module);
         plugin.getLogger().info("模块已关闭: " + module.key);
-        return true;
     }
 
     private void stopModuleIfRunning(ModuleState module) {
         if (module.listenerInstance != null) {
+            // 注销监听器，确保模块关闭后不再响应事件。
             HandlerList.unregisterAll(module.listenerInstance);
         }
         module.listenerInstance = null;
