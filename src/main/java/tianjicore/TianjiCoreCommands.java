@@ -5,6 +5,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
 import java.util.Locale;
 
@@ -19,12 +20,8 @@ public class TianjiCoreCommands implements CommandExecutor, TabCompleter {
     }
 
     @Override
-    public boolean onCommand(
-            CommandSender sender,
-            Command command,
-            String label,
-            String[] args
-    ) {
+    @ParametersAreNonnullByDefault
+    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (args.length == 0) {
             commandUtil.sendHelp(sender, label);
             return true;
@@ -52,12 +49,8 @@ public class TianjiCoreCommands implements CommandExecutor, TabCompleter {
     }
 
     @Override
-    public List<String> onTabComplete(
-            CommandSender sender,
-            Command command,
-            String alias,
-            String[] args
-    ) {
+    @ParametersAreNonnullByDefault
+    public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
         if (args.length == 1) {
             return commandUtil.completeSubCommands(args[0]);
         }
