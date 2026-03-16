@@ -6,6 +6,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 
+// 禁止幻翼生成
 public class PhantomSpawnBlocker implements Listener {
 
   @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
