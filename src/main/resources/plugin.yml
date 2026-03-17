@@ -7,7 +7,6 @@ commands:
   tianji:
     description: TianjiCore 管理命令
     usage: /tianji [toggle|reload] [module]
-    aliases: [ org.tianjicore, tj ]
 permissions:
   tianjicore.command:
     description: 使用 TianjiCore 管理命令
