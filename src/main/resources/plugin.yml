@@ -8,6 +8,6 @@ commands:
     description: TianjiCore 管理命令
     usage: /tianji [toggle|reload] [module]
 permissions:
-  tianjicore.command:
+  tianjicore.command.admin:
     description: 使用 TianjiCore 管理命令
     default: op

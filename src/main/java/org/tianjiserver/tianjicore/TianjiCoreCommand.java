@@ -4,6 +4,7 @@ import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.command.CommandSender;
 import revxrsal.commands.annotation.Command;
 import revxrsal.commands.annotation.Subcommand;
+import revxrsal.commands.bukkit.annotation.CommandPermission;
 
 
 @Command({"tianjicore", "tc"})
@@ -24,7 +25,7 @@ public class TianjiCoreCommand {
     moduleHelper.shutdown();
   }
 
-
+  @CommandPermission("tianjicore.command.admin")
   @Subcommand("toggle")
   public void handleToggleCommand(CommandSender sender, String moduleInput) {
     var result = moduleHelper.toggleModule(moduleInput);
@@ -58,7 +59,7 @@ public class TianjiCoreCommand {
     }
   }
 
-
+  @CommandPermission("tianjicore.command.admin")
   @Subcommand("reload")
   public void handleReloadCommand(CommandSender sender, String moduleInput) {
     var result = moduleHelper.reloadModule(moduleInput);
