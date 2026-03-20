@@ -159,13 +159,6 @@ class TianjiCoreModuleManager {
                 .collect(Collectors.toList());
     }
 
-    List<String> filterByPrefix(List<String> sources, String rawInput) {
-        String normalizedInput = normalize(rawInput);
-        return sources.stream()
-                .filter(option -> option.toLowerCase(Locale.ROOT).startsWith(normalizedInput))
-                .collect(Collectors.toList());
-    }
-
     boolean isModuleEnabled(String rawModuleInput) {
         ModuleState module = findModule(rawModuleInput);
         return module != null && module.enabled;
