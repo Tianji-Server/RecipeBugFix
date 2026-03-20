@@ -2,6 +2,8 @@ package org.tianjiserver.tianjicore;
 
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+import org.tianjiserver.tianjicore.itemloreandsignature.ItemLoreAndSignature;
 import revxrsal.commands.annotation.Command;
 import revxrsal.commands.annotation.Subcommand;
 import revxrsal.commands.bukkit.annotation.CommandPermission;
@@ -11,10 +13,12 @@ import revxrsal.commands.bukkit.annotation.CommandPermission;
 public class TianjiCoreCommand {
   
   private final TianjiCoreModuleHelper moduleHelper;
+  private final ItemLoreAndSignature itemLoreAndSignature;
   private final MiniMessage mini = MiniMessage.miniMessage();
 
   public TianjiCoreCommand(TianjiCore plugin) {
     this.moduleHelper = new TianjiCoreModuleHelper(plugin);
+    this.itemLoreAndSignature = new ItemLoreAndSignature(plugin);
   }
 
   public void bootstrap() {
@@ -91,9 +95,20 @@ public class TianjiCoreCommand {
   }
 
 
+  @CommandPermission("tianjicore.command.forge")
+  @Subcommand("forge")
+  public void handleForgeCommand(Player player) {
+    if (!moduleHelper.isModuleEnabled("itemloreandsignature")) {
+      player.sendMessage(mini.deserialize("<red>物品签名锻造模块未启用"));
+      return;
+    }
+    itemLoreAndSignature.openForgeUi(player);
+  }
+
   @Subcommand("help")
   public void handleHelpCommand(CommandSender sender) {
     sender.sendMessage(mini.deserialize("<yellow>命令帮助:"));
+    sender.sendMessage(mini.deserialize("<gray>/tc forge <white>打开锻造铁砧，为物品添加一行 lore"));
     sender.sendMessage(mini.deserialize("<gray>/tc toggle <module> <white>开关指定模块"));
     sender.sendMessage(mini.deserialize("<gray>/tc reload <module|plugin> <white>重载插件或指定模块"));
     sender.sendMessage(mini.deserialize("<gray>可开关模块: <aqua>" + String.join(", ", moduleHelper.getToggleableModuleKeys())));

@@ -5,6 +5,7 @@ import org.bukkit.event.Listener;
 import org.tianjiserver.tianjicore.feature.PhantomSpawnBlocker;
 import org.tianjiserver.tianjicore.fixer.EndermanMushroomBugFix;
 import org.tianjiserver.tianjicore.fixer.RecipeBugFix;
+import org.tianjiserver.tianjicore.itemloreandsignature.ItemLoreAndSignature;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -62,6 +63,15 @@ class TianjiCoreModuleManager {
                 EndermanMushroomBugFix::new,
                 "enderman",
                 "mushroomfix"
+        );
+        registerModule(
+                "itemloreandsignature",
+                "物品签名锻造",
+                true,
+                () -> new ItemLoreAndSignature(plugin),
+                "itemsign",
+                "forge",
+                "lore"
         );
 
         plugin.getConfig().options().copyDefaults(true);
@@ -154,6 +164,11 @@ class TianjiCoreModuleManager {
         return sources.stream()
                 .filter(option -> option.toLowerCase(Locale.ROOT).startsWith(normalizedInput))
                 .collect(Collectors.toList());
+    }
+
+    boolean isModuleEnabled(String rawModuleInput) {
+        ModuleState module = findModule(rawModuleInput);
+        return module != null && module.enabled;
     }
 
     private void applyConfigStates(boolean forceRestartEnabledModule) {

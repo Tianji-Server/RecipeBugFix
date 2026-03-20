@@ -63,4 +63,11 @@ class TianjiCoreModuleHelper {
   String getReloadPluginTarget() {
     return moduleManager.getReloadPluginTarget();
   }
+
+  /**
+   * 指定模块当前是否启用
+   */
+  boolean isModuleEnabled(String moduleInput) {
+    return moduleManager.isModuleEnabled(moduleInput);
+  }
 }
