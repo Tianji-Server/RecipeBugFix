@@ -12,6 +12,9 @@ public class TianjiCore extends JavaPlugin {
     private static TianjiCore instance;
     private TianjiCoreCommand commandHandler;
 
+    /**
+     * 插件启用入口：初始化配置、模块与命令注册。
+     */
     @Override
     public void onEnable() {
         instance = this;
@@ -27,6 +30,9 @@ public class TianjiCore extends JavaPlugin {
         getLogger().info("TianjiCore 已启动");
     }
 
+    /**
+     * 插件关闭入口：执行模块卸载流程。
+     */
     @Override
     public void onDisable() {
         if (commandHandler != null) {
@@ -34,6 +40,9 @@ public class TianjiCore extends JavaPlugin {
         }
     }
 
+    /**
+     * 提供全局插件实例访问入口。
+     */
     public static TianjiCore getInstance() {
         return instance;
     }

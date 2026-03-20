@@ -14,10 +14,16 @@ class TianjiCoreModuleHelper {
         this.moduleManager = new TianjiCoreModuleManager(plugin);
     }
 
+    /**
+     * 启动模块系统。
+     */
     void bootstrap() {
         moduleManager.bootstrap();
     }
 
+    /**
+     * 关闭模块系统。
+     */
     void shutdown() {
         moduleManager.shutdown();
     }

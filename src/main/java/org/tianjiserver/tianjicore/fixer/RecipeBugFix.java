@@ -24,6 +24,9 @@ public class RecipeBugFix implements Listener {
     // 启动阶段收集全量配方 key，避免每次玩家加入时重复遍历。
     List<NamespacedKey> allRecipeKeys;
 
+    /**
+     * 初始化时缓存当前服务端所有可识别配方。
+     */
     public RecipeBugFix() {
         allRecipeKeys = new ArrayList<>();
         Iterator<Recipe> iterator = Bukkit.recipeIterator();
@@ -38,6 +41,9 @@ public class RecipeBugFix implements Listener {
         TianjiCore.getInstance().getLogger().info("RecipeBugFix feature is loaded");
     }
 
+    /**
+     * 玩家加入后补发已缓存配方，降低客户端配方状态不同步概率。
+     */
     @EventHandler(ignoreCancelled = true)
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();

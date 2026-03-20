@@ -18,7 +18,9 @@ public final class VaultUtil {
     private VaultUtil() {
     }
 
-    // 封装的存钱方法
+    /**
+     * 给玩家账户存入指定金额。
+     */
     public static TransactionResult deposit(OfflinePlayer player, double amount) {
         TransactionResult invalidResult = validateRequest(player, amount);
         if (invalidResult != null) {
@@ -73,7 +75,9 @@ public final class VaultUtil {
         return success("存款成功", amount, before, after);
     }
 
-    // 封装的取钱方法
+    /**
+     * 从玩家账户扣除指定金额。
+     */
     public static TransactionResult withdraw(OfflinePlayer player, double amount) {
         TransactionResult invalidResult = validateRequest(player, amount);
         if (invalidResult != null) {
@@ -138,10 +142,16 @@ public final class VaultUtil {
         return success("取款成功", amount, before, after);
     }
 
+    /**
+     * 判断当前是否具备可用的 Vault + Economy 提供方。
+     */
     public static boolean isAvailable() {
         return isVaultInstalled() && resolveEconomy() != null;
     }
 
+    /**
+     * 参数校验：玩家与金额格式。
+     */
     private static TransactionResult validateRequest(OfflinePlayer player, double amount) {
         if (player == null) {
             return failure(
@@ -166,6 +176,9 @@ public final class VaultUtil {
         return null;
     }
 
+    /**
+     * 确保玩家已存在经济账户。
+     */
     private static boolean ensureAccount(Economy economy, OfflinePlayer player) {
         if (economy.hasAccount(player)) {
             return true;
@@ -173,10 +186,16 @@ public final class VaultUtil {
         return economy.createPlayerAccount(player);
     }
 
+    /**
+     * 检查 Vault 插件是否已加载。
+     */
     private static boolean isVaultInstalled() {
         return Bukkit.getPluginManager().getPlugin(VAULT_PLUGIN_NAME) != null;
     }
 
+    /**
+     * 从 Bukkit 服务管理器解析 Economy 实现。
+     */
     private static Economy resolveEconomy() {
         RegisteredServiceProvider<Economy> registration =
                 Bukkit.getServicesManager().getRegistration(Economy.class);
@@ -186,6 +205,9 @@ public final class VaultUtil {
         return registration.getProvider();
     }
 
+    /**
+     * 提取可读错误信息，避免空字符串日志。
+     */
     private static String errorMessage(EconomyResponse response) {
         if (response == null || response.errorMessage == null || response.errorMessage.isBlank()) {
             return "未知错误";
@@ -207,6 +229,9 @@ public final class VaultUtil {
         return new TransactionResult(status, message, amount, before, after);
     }
 
+    /**
+     * 交易状态枚举。
+     */
     public enum TransactionStatus {
         SUCCESS,
         INVALID_PLAYER,
@@ -218,6 +243,9 @@ public final class VaultUtil {
         TRANSACTION_FAILED
     }
 
+    /**
+     * 交易结果数据。
+     */
     public record TransactionResult(
             TransactionStatus status,
             String message,

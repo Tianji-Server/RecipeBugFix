@@ -9,6 +9,10 @@ import revxrsal.commands.annotation.Subcommand;
 import revxrsal.commands.bukkit.annotation.CommandPermission;
 
 
+/**
+ * TianjiCore 命令入口。
+ * 负责对接命令框架，并将模块操作委托给模块辅助层。
+ */
 @Command({"tianjicore", "tc"})
 public class TianjiCoreCommand {
 
@@ -21,14 +25,23 @@ public class TianjiCoreCommand {
         this.itemLoreAndSignature = new ItemLoreAndSignature(plugin);
     }
 
+    /**
+     * 插件启动时初始化模块管理器。
+     */
     public void bootstrap() {
         moduleHelper.bootstrap();
     }
 
+    /**
+     * 插件关闭时执行模块下线流程。
+     */
     public void shutdown() {
         moduleHelper.shutdown();
     }
 
+    /**
+     * 开关指定模块（仅允许可切换模块）。
+     */
     @CommandPermission("tianjicore.command.admin")
     @Subcommand("toggle")
     public void handleToggleCommand(CommandSender sender, String moduleInput) {
@@ -63,6 +76,9 @@ public class TianjiCoreCommand {
         }
     }
 
+    /**
+     * 重载指定模块，或执行插件级整体重载。
+     */
     @CommandPermission("tianjicore.command.admin")
     @Subcommand("reload")
     public void handleReloadCommand(CommandSender sender, String moduleInput) {
@@ -95,6 +111,9 @@ public class TianjiCoreCommand {
     }
 
 
+    /**
+     * 打开锻造 UI，允许玩家为手中物品追加一行 lore。
+     */
     @CommandPermission("tianjicore.command.forge")
     @Subcommand("forge")
     public void handleForgeCommand(Player player) {
@@ -105,6 +124,9 @@ public class TianjiCoreCommand {
         itemLoreAndSignature.openForgeUi(player);
     }
 
+    /**
+     * 输出当前可用子命令与模块参数提示。
+     */
     @Subcommand("help")
     public void handleHelpCommand(CommandSender sender) {
         sender.sendMessage(mini.deserialize("<yellow>命令帮助:"));

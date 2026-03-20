@@ -88,6 +88,9 @@ class TianjiCoreModuleManager {
         modules.values().forEach(this::stopModuleIfRunning);
     }
 
+    /**
+     * 切换指定模块的启停状态。
+     */
     ToggleResult toggle(String rawModuleInput) {
         ModuleState module = findModule(rawModuleInput);
         if (module == null) {
@@ -111,6 +114,9 @@ class TianjiCoreModuleManager {
         return new ToggleResult(ToggleStatus.SUCCESS, module.toInfo());
     }
 
+    /**
+     * 重载插件配置，并按目标刷新对应模块。
+     */
     ReloadResult reload(String rawTargetInput) {
         String target = normalize(rawTargetInput);
         if (RELOAD_PLUGIN_ALIASES.contains(target)) {
@@ -137,10 +143,16 @@ class TianjiCoreModuleManager {
         return new ReloadResult(ReloadStatus.SUCCESS_MODULE, module.toInfo());
     }
 
+    /**
+     * 返回插件级重载的固定参数名。
+     */
     String getReloadPluginTarget() {
         return RELOAD_PLUGIN_TARGET;
     }
 
+    /**
+     * 返回所有可用于 reload 的目标（含 plugin）。
+     */
     List<String> getReloadTargets() {
         List<String> targets = new ArrayList<>();
         targets.add(RELOAD_PLUGIN_TARGET);
@@ -148,10 +160,16 @@ class TianjiCoreModuleManager {
         return targets;
     }
 
+    /**
+     * 返回所有模块主键（按注册顺序）。
+     */
     List<String> getModuleKeys() {
         return List.copyOf(modules.keySet());
     }
 
+    /**
+     * 返回允许 toggle 的模块主键。
+     */
     List<String> getToggleableModuleKeys() {
         return modules.values().stream()
                 .filter(module -> module.toggleable)
@@ -159,6 +177,9 @@ class TianjiCoreModuleManager {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * 判断指定模块是否处于启用状态。
+     */
     boolean isModuleEnabled(String rawModuleInput) {
         ModuleState module = findModule(rawModuleInput);
         return module != null && module.enabled;
@@ -224,6 +245,9 @@ class TianjiCoreModuleManager {
         module.enabled = false;
     }
 
+    /**
+     * 注册模块并建立主键/别名映射。
+     */
     private void registerModule(
             String moduleKey,
             String displayName,
@@ -241,6 +265,9 @@ class TianjiCoreModuleManager {
         }
     }
 
+    /**
+     * 按主键或别名定位模块。
+     */
     private ModuleState findModule(String rawInput) {
         String normalizedInput = normalize(rawInput);
         String moduleKey = moduleAliasIndex.get(normalizedInput);
@@ -254,10 +281,16 @@ class TianjiCoreModuleManager {
         return "modules." + moduleKey + ".enabled";
     }
 
+    /**
+     * 标准化命令输入，统一比较规则。
+     */
     private String normalize(String input) {
         return input.toLowerCase(Locale.ROOT).trim();
     }
 
+    /**
+     * toggle 操作返回状态。
+     */
     enum ToggleStatus {
         SUCCESS,
         UNKNOWN_MODULE,
@@ -265,6 +298,9 @@ class TianjiCoreModuleManager {
         FAILED
     }
 
+    /**
+     * reload 操作返回状态。
+     */
     enum ReloadStatus {
         SUCCESS_PLUGIN,
         SUCCESS_MODULE,
@@ -272,12 +308,21 @@ class TianjiCoreModuleManager {
         FAILED
     }
 
+    /**
+     * 供命令层回显的模块信息快照。
+     */
     record ModuleInfo(String key, String displayName, boolean enabled) {
     }
 
+    /**
+     * toggle 操作结果对象。
+     */
     record ToggleResult(ToggleStatus status, ModuleInfo moduleInfo) {
     }
 
+    /**
+     * reload 操作结果对象。
+     */
     record ReloadResult(ReloadStatus status, ModuleInfo moduleInfo) {
     }
 

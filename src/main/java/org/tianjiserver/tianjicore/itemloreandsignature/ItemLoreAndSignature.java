@@ -30,11 +30,17 @@ public class ItemLoreAndSignature implements Listener {
     private final TianjiCore plugin;
     private final MiniMessage mini = MiniMessage.miniMessage();
 
+    /**
+     * 创建锻造模块并写入默认配置。
+     */
     public ItemLoreAndSignature(TianjiCore plugin) {
         this.plugin = plugin;
         registerDefaults();
     }
 
+    /**
+     * 打开锻造铁砧界面。
+     */
     public void openForgeUi(Player player) {
         if (!VaultUtil.isAvailable()) {
             player.sendMessage(mini.deserialize("<red>经济系统不可用，无法进行锻造"));
@@ -49,6 +55,9 @@ public class ItemLoreAndSignature implements Listener {
                 .open(player);
     }
 
+    /**
+     * 处理锻造点击：校验输入、扣费、写入 lore，失败则回滚退款。
+     */
     private List<AnvilGUI.ResponseAction> onClickForge(int slot, AnvilGUI.StateSnapshot snapshot) {
         if (slot != AnvilGUI.Slot.OUTPUT) {
             return List.of();
@@ -85,6 +94,9 @@ public class ItemLoreAndSignature implements Listener {
         return List.of(AnvilGUI.ResponseAction.close());
     }
 
+    /**
+     * 在物品末尾追加一行 lore。
+     */
     private boolean appendLore(ItemStack item, String loreLine) {
         ItemMeta meta = item.getItemMeta();
         if (meta == null) {
@@ -98,11 +110,17 @@ public class ItemLoreAndSignature implements Listener {
         return item.setItemMeta(meta);
     }
 
+    /**
+     * 读取锻造费用并兜底为合法默认值。
+     */
     private double resolveForgeCost() {
         double configured = plugin.getConfig().getDouble(CONFIG_FORGE_COST_PATH, DEFAULT_FORGE_COST);
         return configured > 0D ? configured : DEFAULT_FORGE_COST;
     }
 
+    /**
+     * 写入锻造模块默认配置项。
+     */
     private void registerDefaults() {
         plugin.getConfig().addDefault(CONFIG_FORGE_COST_PATH, DEFAULT_FORGE_COST);
         plugin.getConfig().addDefault(CONFIG_FORGE_TITLE_PATH, DEFAULT_FORGE_TITLE);
