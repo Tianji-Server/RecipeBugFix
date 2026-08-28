@@ -13,7 +13,7 @@ import org.tianjiserver.tianjicore.TianjiCore;
  */
 public class FirstJoinMessage implements Listener {
 
-    private static final long MESSAGE_DELAY_TICKS = 3L;
+    private static final long MESSAGE_DELAY_TICKS = 60L;
 
     private final TianjiCore plugin;
     private final MiniMessage miniMessage = MiniMessage.miniMessage();
