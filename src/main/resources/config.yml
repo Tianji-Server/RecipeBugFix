@@ -1,4 +1,6 @@
 modules:
+  firstjoinmessage:
+    enabled: true
   recipebugfix:
     enabled: true
   phantomspawnblocker:
@@ -7,6 +9,9 @@ modules:
     enabled: true
   itemloreandsignature:
     enabled: false
+
+first-join-message:
+  message: "<gold>欢迎首次加入服务器！"
 
 itemloreandsignature:
   forge:
